@@ -1,0 +1,68 @@
+{% extends "admin/change_form.html" %}
+
+{% block after_related_objects %}
+    <script>
+        let question_type = document.querySelector('#id_type')
+        setTimeout(() => {
+            if (question_type.value === 'single_choice') {
+                markRadio()
+            }
+        }, 300)
+
+        question_type.addEventListener('change', (e) => {
+            if (question_type.value === 'single_choice') {
+                markRadio()
+            } else {
+                markCheckbox()
+            }
+        })
+
+        document.querySelectorAll('.field-correct > input').forEach(elem => {
+            elem.addEventListener('change', (e) => {
+                if (question_type.value === 'single_choice') {
+                    this.unMarkAllRadio(elem)
+                }
+                setScore()
+            })
+        })
+
+        function markRadio() {
+            document.querySelectorAll('.field-correct > input').forEach(elem => {
+                elem.type = 'radio'
+            })
+        }
+
+        function markCheckbox() {
+            document.querySelectorAll('.field-correct > input').forEach(elem => {
+                elem.type = 'checkbox'
+            })
+        }
+
+        async function unMarkAllRadio(e) {
+            await document.querySelectorAll('.field-correct > input').forEach(elem => {
+                if (elem.id !== e.id) {
+                    console.log(elem.id)
+                    console.log(e.id)
+                    elem.checked = false
+                }
+            })
+        }
+
+        function setScore() {
+            let correct = document.querySelectorAll('.field-correct > input:checked').length
+            let mark = document.querySelector('#id_score').value
+            document.querySelectorAll('.dynamic-answers').forEach(tableRow => {
+                if (tableRow.childNodes[7].childNodes[1].checked) {
+                    tableRow.childNodes[5].childNodes[1].value = mark / correct
+                } else {
+                    if (question_type.value === 'single_choice') {
+                        tableRow.childNodes[5].childNodes[1].value = 0
+                    } else {
+                        tableRow.childNodes[5].childNodes[1].value = -(mark / correct)
+                    }
+
+                }
+            })
+        }
+    </script>
+{% endblock %}

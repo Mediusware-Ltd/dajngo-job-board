@@ -1,0 +1,74 @@
+{% extends 'admin/base.html' %}
+{% block branding %}
+    <h1>Medisuware Ltd</h1>
+{% endblock %}
+
+{% block content %}
+    <center>
+        <h1> {{ assessment }}
+            <span style="display: block; font-size: 16px">
+                Score : {{ assessment.score }}
+                Duration : {{ assessment.duration }} Minutes
+                Pass Mark : {{ assessment.pass_score_a }}
+            </span>
+        </h1>
+
+        Score : {{ assessment.score }} | {{ assessment.duration }} Minutes | Total Question :
+        {{ assessment.assessmentquestion_set.count }}
+    </center>
+
+    <br>
+    {{ assessment.description | safe }}
+
+    <hr>
+    <ol>
+        {% for assessment_question in assessment.assessmentquestion_set.all %}
+            <li>
+                <div style="display: flex">
+                    <div style="width: 50%">{{ assessment_question.title | safe }}</div>
+                    <div style="float: right">{{ assessment_question.get_type_display }} |
+                        Score {{ assessment_question.score }}</div>
+                </div>
+                <ol>
+                    {% for assessment_answer in assessment_question.answers.all %}
+                        <li>
+                            <div style="display: flex">
+                                <div style="width: 50%"> {{ assessment_answer.title | safe }}</div>
+                                <div style="padding-left: 10px">
+                                    {{ assessment_answer.score }} | {{ assessment_answer.correct }}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </li>
+        {% endfor %}
+    </ol>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css"
+          integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"
+            integrity="sha512-axJX7DJduStuBB8ePC8ryGzacZPr3rdLaIDZitiEgWWk2gsXxEFlm4UW0iNzj2h3wp5mOylgHAzBzM4nRSvTZA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-markup-templating.min.js"
+            integrity="sha512-TbMpeuT8rHP3DrAX8tSkpspYIT3It0fypBn5XaSp+Hiy3n9wvPFjd3pal7YtesrphulbmxcLNB9E0sq7xDGtWg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-php.min.js"
+            integrity="sha512-2RfDhHj8vXXJWFGaCJTSkt//hXtdb9/Sh2c68tx/Jf+0V5a7xOHY1oIlzF9KX591HX/cB+uDQMBXeYX/JKvlrw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"
+            integrity="sha512-nvWJ2DdGeQzxIYP5eo2mqC+kXLYlH4QZ/AWYZ/yDc5EqM74jiC5lxJ+8d+6zI/H9MlsIIjrJsaRTgLtvo+Jy6A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-json.min.js"
+            integrity="sha512-NFh0rog24tZqD7+bvhZ15l9r10u/yir42sQ1EuUEWpw2Pyh1KrGUKKXI1TWSAX7RxaohbPn0u1fTb6+YU4u3zA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-scss.min.js"
+            integrity="sha512-lQbJbXcaOvte/zzg18pf9ybI3iKZ2taOu9jE9c2z00Pdt8WiWAi3nFENtn+2aqlWaWkM+g683Wgj0ka/TOLvCw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock %}
+
+{% block nav-sidebar %}
+    {% include 'admin/nav_sidebar.html' with app_list=available_apps show_changelinks=False %}
+{% endblock %}
+
