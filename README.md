@@ -1,6 +1,5 @@
-===================
-Django Job Board
-===================
+
+# Django Job Board
 
 Job Board is a Django applicaiton that you can use in any django 3 software
 
