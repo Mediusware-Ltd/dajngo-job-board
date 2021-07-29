@@ -2,10 +2,9 @@
 Job Board
 =====
 
-Polls is a Django app to conduct Web-based polls. For each question,
-visitors can choose between a fixed number of answers.
+Job Board is a Django applicaiton that you can use in any django 3 software
 
-Detailed documentation is in the "docs" directory.
+Detailed documentation comming soon
 
 Quick start
 -----------
@@ -14,16 +13,21 @@ Quick start
 
     INSTALLED_APPS = [
         ...
-        'polls',
+        'job_board',
     ]
 
 2. Include the polls URLconf in your project urls.py like this::
 
-    path('polls/', include('polls.urls')),
+    path('job_board/', include('job_board.urls')),
 
 3. Run ``python manage.py migrate`` to create the polls models.
 
 4. Start the development server and visit http://127.0.0.1:8000/admin/
-   to create a poll (you'll need the Admin app enabled).
 
-5. Visit http://127.0.0.1:8000/polls/ to participate in the poll.
+5. Visit http://127.0.0.1:8000/job_board/ to explore job_board.
+6. Dependencies
+   1. djangorestframework
+   2. django-tinymce
+   3. django-userforeignkey
+   4. pillow and
+   5. pyjwt
